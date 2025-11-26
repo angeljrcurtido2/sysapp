@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install:*)",
+      "Bash(nul)",
+      "Bash(ls:*)",
+      "Bash(Remove-Item -Recurse -Force \"c:\\SIS_VENTAS_NEXT\\migracion_app_cliente\\sysapp\\app\\(tabs)\")",
+      "Bash(ipconfig:*)",
+      "Bash(findstr:*)",
+      "Bash(cat:*)",
+      "Bash(.env)",
+      "Bash(node -c:*)",
+      "Bash(node test-voice-setup.js:*)",
+      "Bash(powershell.exe -ExecutionPolicy Bypass -File fix-server.ps1)",
+      "Bash(./gradlew assembleRelease:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
