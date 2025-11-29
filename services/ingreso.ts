@@ -68,3 +68,7 @@ export const abrirMovimientoCaja = (data: {
 }) => {
   return api.post('/movimientos', data);
 };
+
+export const getTotalIngresos = () => {
+  return api.get('/ingresos/total');
+};

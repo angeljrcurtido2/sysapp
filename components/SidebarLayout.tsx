@@ -11,17 +11,23 @@ interface SidebarLayoutProps {
 }
 
 export default function SidebarLayout({ children, hideBottomNav = false }: SidebarLayoutProps) {
-  const userRole = useUserStore((s) => s.userRole);
-
+  // Don't subscribe to store to avoid re-renders - use getState() directly instead
   useEffect(() => {
+    console.log('🏗️ SidebarLayout mounted');
     const checkAuth = async () => {
       const stored = await AsyncStorage.getItem("usuario");
-      if (!userRole && !stored) {
+      const currentRole = useUserStore.getState().userRole;
+      if (!currentRole && !stored) {
+        console.log('⚠️ SidebarLayout: No auth found, redirecting to login');
         router.replace("/login");
       }
     };
     checkAuth();
-  }, [userRole]);
+
+    return () => {
+      console.log('🗑️ SidebarLayout unmounting');
+    };
+  }, []);
 
   return (
     <View

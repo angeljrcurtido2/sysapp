@@ -12,7 +12,14 @@
       "Bash(node -c:*)",
       "Bash(node test-voice-setup.js:*)",
       "Bash(powershell.exe -ExecutionPolicy Bypass -File fix-server.ps1)",
-      "Bash(./gradlew assembleRelease:*)"
+      "Bash(./gradlew assembleRelease:*)",
+      "Bash(Remove-Item -Force \"c:\\SIS_VENTAS_NEXT\\migracion_app_cliente\\sysapp\\components\\VoiceIngresoModal.tsx\" -ErrorAction SilentlyContinue)",
+      "Bash(Remove-Item -Force \"c:\\SIS_VENTAS_NEXT\\migracion_app_cliente\\sysapp\\components\\VoiceRecognitionNative.tsx\" -ErrorAction SilentlyContinue)",
+      "Bash(Remove-Item -Force \"c:\\SIS_VENTAS_NEXT\\migracion_app_cliente\\sysapp\\components\\VoiceRecognitionExpo.tsx\" -ErrorAction SilentlyContinue)",
+      "Bash(Remove-Item -Force \"c:\\SIS_VENTAS_NEXT\\migracion_app_cliente\\sysapp\\components\\EjemploVoz.tsx\" -ErrorAction SilentlyContinue)",
+      "Bash(npm uninstall:*)",
+      "Bash(powershell -Command \"echo $env:ANDROID_HOME\")",
+      "Bash(powershell -Command:*)"
     ],
     "deny": [],
     "ask": []

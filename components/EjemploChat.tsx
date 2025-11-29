@@ -1,18 +1,18 @@
 /**
- * EJEMPLO DE USO DEL SISTEMA DE RECONOCIMIENTO DE VOZ
+ * EJEMPLO DE USO DEL SISTEMA DE CHAT PARA REGISTRO DE INGRESOS
  *
- * Este componente demuestra cómo usar el módulo de voz en tu aplicación
+ * Este componente demuestra cómo usar el módulo de chat en tu aplicación
  */
 
 import React, { useState } from 'react';
 import { View, Text, Pressable, ScrollView, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import VoiceIngresoModal from './VoiceIngresoModal';
+import ChatIngresoModal from './ChatIngresoModal';
 import ModalSuccess from './ModalSuccess';
-import type { ParsedIncome } from '../hooks/useVoiceToIncome';
+import type { ParsedIncome } from '../hooks/useTextToIncome';
 
-export default function EjemploVoz() {
-  const [showVoiceModal, setShowVoiceModal] = useState(false);
+export default function EjemploChat() {
+  const [showChatModal, setShowChatModal] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const [ultimoIngreso, setUltimoIngreso] = useState<ParsedIncome | null>(null);
   const [historial, setHistorial] = useState<ParsedIncome[]>([]);
@@ -35,23 +35,23 @@ export default function EjemploVoz() {
     <ScrollView style={styles.container}>
       {/* Header */}
       <View style={styles.header}>
-        <Ionicons name="mic" size={40} color="#3b82f6" />
-        <Text style={styles.title}>Sistema de Reconocimiento de Voz</Text>
+        <Ionicons name="chatbubble-ellipses" size={40} color="#3b82f6" />
+        <Text style={styles.title}>Sistema de Chat con IA</Text>
         <Text style={styles.subtitle}>
-          Registra ingresos usando comandos de voz con IA
+          Registra ingresos escribiendo comandos de texto con IA
         </Text>
       </View>
 
       {/* Botón principal */}
       <Pressable
         style={styles.mainButton}
-        onPress={() => setShowVoiceModal(true)}
+        onPress={() => setShowChatModal(true)}
       >
         <View style={styles.buttonContent}>
-          <Ionicons name="mic-circle" size={48} color="#fff" />
-          <Text style={styles.buttonText}>Registrar por Voz</Text>
+          <Ionicons name="chatbox-ellipses" size={48} color="#fff" />
+          <Text style={styles.buttonText}>Registrar por Chat</Text>
           <Text style={styles.buttonSubtext}>
-            Toca para hablar
+            Toca para escribir
           </Text>
         </View>
       </Pressable>
@@ -62,13 +62,13 @@ export default function EjemploVoz() {
           💡 Ejemplos de comandos:
         </Text>
         <Text style={styles.instructionItem}>
-          • "Registrar un ingreso de 150 dólares por venta de equipos"
+          • "Registrar un ingreso de 150 por venta de equipos"
         </Text>
         <Text style={styles.instructionItem}>
-          • "Ingreso de 50 pesos por servicio técnico"
+          • "Ingreso de 50 por servicio técnico"
         </Text>
         <Text style={styles.instructionItem}>
-          • "Anotar 75 dólares de reparación"
+          • "Anotar 75 de reparación"
         </Text>
       </View>
 
@@ -107,10 +107,10 @@ export default function EjemploVoz() {
         </View>
       )}
 
-      {/* Modal de reconocimiento de voz */}
-      <VoiceIngresoModal
-        isOpen={showVoiceModal}
-        onClose={() => setShowVoiceModal(false)}
+      {/* Modal de chat */}
+      <ChatIngresoModal
+        isOpen={showChatModal}
+        onClose={() => setShowChatModal(false)}
         onIngresoRegistrado={handleIngresoRegistrado}
       />
 

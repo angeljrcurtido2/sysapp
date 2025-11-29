@@ -42,3 +42,7 @@ export const registrarEgreso = (data: {
   return api.post('/egresos/registrar', data);
 };
 
+export const getTotalEgresos = () => {
+  return api.get('/egresos/total');
+};
+

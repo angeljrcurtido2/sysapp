@@ -122,14 +122,26 @@ const AppSidebar: React.FC<AppSidebarProps> = ({
   const initials = getInitials(userData.nombreUsuario);
 
   const handleLogout = async () => {
+    console.log('🚪 Sidebar handleLogout called');
     try {
       await api.post("/auth/logout");
-    } catch {}
+      console.log('✅ Logout API call successful');
+    } catch (error) {
+      console.log('⚠️ Logout API call failed (continuing anyway)');
+    }
     await AsyncStorage.removeItem("usuario");
     await AsyncStorage.removeItem("auth_token");
+    console.log('🗑️ Removed auth data from AsyncStorage');
+
     resetStore();
+    console.log('🔄 Store reset from Sidebar');
     setUserData(InitialUserData);
-    router.replace("/login");
+    console.log('➡️ Navigating to /login from Sidebar handleLogout');
+
+    // Add setTimeout to allow state cleanup
+    setTimeout(() => {
+      router.replace("/login");
+    }, 100);
   };
 
   const currentWidth = isCollapsed ? COLLAPSED_WIDTH : DRAWER_WIDTH;

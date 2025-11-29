@@ -71,7 +71,8 @@ const menuItems: MenuItem[] = [
       { title: 'Ingresos', path: '/movimiento/ingreso', icon: 'trending-up' },
       { title: 'Egresos', path: '/movimiento/egreso', icon: 'trending-down' },
       { title: 'Cierre Caja', path: '/movimiento/cierrecaja', icon: 'wallet' },
-      { title: 'Voz', path: '/movimiento/voz', icon: 'wallet' }
+      { title: 'Chat Registro Ingreso', path: '/movimiento/ingreso/chatregistro', icon: 'wallet' },
+      { title: 'Chat Registro Egreso', path: '/movimiento/egreso/chatregistro', icon: 'wallet' },
     ],
   },
   {
@@ -157,13 +158,26 @@ export default function MenuPage() {
       .slice(0, 2);
 
   const handleLogout = async () => {
+    console.log('🚪 handleLogout called');
     try {
       await api.post('/auth/logout');
-    } catch {}
+      console.log('✅ Logout API call successful');
+    } catch (error) {
+      console.log('⚠️ Logout API call failed (continuing anyway)');
+    }
     await AsyncStorage.removeItem('usuario');
     await AsyncStorage.removeItem('auth_token');
+    console.log('🗑️ Removed auth data from AsyncStorage');
+
+    // Resetear el store de forma síncrona
     resetStore();
-    router.replace('/login');
+    console.log('🔄 Store reset');
+    console.log('➡️ Navigating to /login from handleLogout');
+
+    // Forzar una navegación limpia usando replace con un delay mínimo
+    setTimeout(() => {
+      router.replace('/login');
+    }, 100);
   };
 
   const handleSubItemPress = (path: string) => {

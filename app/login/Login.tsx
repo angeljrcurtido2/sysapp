@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   View,
   Text,
@@ -22,7 +22,11 @@ import CrearUsuario from "../usuario/CrearUsuario";
 // Si tenés el fondo en assets, ajustá la ruta:
 const bgImage = require("../../assets/background_login.png");
 
-export default function Login() {
+function Login() {
+  const renderCount = useRef(0);
+  renderCount.current += 1;
+  console.log(`🔄 Login component rendered (${renderCount.current} times)`);
+
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -32,7 +36,20 @@ export default function Login() {
   const [errorOpen, setErrorOpen] = useState(false);
   const [successOpen, setSuccessOpen] = useState(false);
 
-  const setUserRole = useUserStore((s:any) => s.setUserRole);
+  // Obtener setUserRole SIN suscribirse al store completo
+  const setUserRoleRef = useRef(useUserStore.getState().setUserRole);
+
+  useEffect(() => {
+    console.log('✅ Login component mounted - this is a NEW instance');
+    // Actualizar la referencia solo si cambia (lo cual es raro)
+    setUserRoleRef.current = useUserStore.getState().setUserRole;
+
+    return () => {
+      console.log('🗑️ Login component unmounting - instance destroyed');
+      // Reset render count on unmount so next instance starts fresh
+      renderCount.current = 0;
+    };
+  }, []);
 
   const handleLogin = async () => {
     if (!login || !password) {
@@ -50,7 +67,7 @@ export default function Login() {
         ["auth_token", token],
       ]);
 
-      setUserRole(acceso);
+      setUserRoleRef.current(acceso);
       setModalMessage("✅ Bienvenido");
       setSuccessOpen(true);
 
@@ -176,3 +193,5 @@ export default function Login() {
     </ImageBackground>
   );
 }
+
+export default React.memo(Login);

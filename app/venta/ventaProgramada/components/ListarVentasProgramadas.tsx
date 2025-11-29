@@ -5,7 +5,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import * as FileSystem from 'expo-file-system/legacy';
 import * as Sharing from 'expo-sharing';
 import { getCargoUsuario } from '@/services/usuarios';
-import { listarVentasProgramadas, anularVentaProgramada, getVentasProgramadasPorCliente } from '@/services/ventas';
+import { listarVentasProgramadasForUsers, anularVentaProgramada, getVentasProgramadasPorCliente } from '@/services/ventas';
 import ModalCrearVenta from '../Modal/ModalCrearVentaPr';
 import ModalListClient from '../Modal/ModalListClient';
 import ModalAdvert from '../../../../components/ModalAdvert';
@@ -42,6 +42,7 @@ const ListarVentasProgramadas = () => {
   const fetchCargo = async () => {
     try {
       const { data } = await getCargoUsuario();
+      console.log('🔍 Cargo obtenido:', data.acceso);
       setCargo(data.acceso);
     } catch (error) {
       console.error('Error al obtener cargo:', error);
@@ -57,13 +58,22 @@ const ListarVentasProgramadas = () => {
   const fetchVentas = async () => {
     try {
       setLoading(true);
-      console.log('Fetching ventas programadas...', { page, limit, search });
-      const res = await listarVentasProgramadas({ page, limit, search });
-      console.log('Ventas recibidas:', res.data);
+      console.log('🔍 Fetching ventas programadas...', {
+        page,
+        limit,
+        search,
+        cargo,
+        rutaUsada: '/ventas-programadas/listadopaginado'
+      });
+
+      // Todos los usuarios ven solo sus ventas programadas + las de sus funcionarios
+      const res = await listarVentasProgramadasForUsers({ page, limit, search });
+
+      console.log('✅ Ventas recibidas:', res.data);
       setVentas(res.data.data || []);
       setTotalPages(res.data.totalPages || 1);
     } catch (error) {
-      console.error('Error al obtener ventas programadas:', error);
+      console.error('❌ Error al obtener ventas programadas:', error);
       setVentas([]);
     } finally {
       setLoading(false);
@@ -124,8 +134,10 @@ const ListarVentasProgramadas = () => {
 
   useEffect(() => {
     console.log('Component mounted - ListarVentasProgramadas');
-    fetchVentas();
-  }, [page, limit, search]);
+    if (cargo) {
+      fetchVentas();
+    }
+  }, [page, limit, search, cargo]);
 
   const handleDelete = (id: number) => {
     setIdVentaAAnular(id);

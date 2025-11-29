@@ -4,6 +4,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { Ionicons } from "@expo/vector-icons";
 
 import EcommerceMetrics from "./components/EcommerceMetrics";
+import IngresoEgresoMetrics from "./components/IngresoEgresoMetrics";
 import MonthlySalesChart from "./components/MonthlySalesChart";
 import RecentOrders from "./components/RecentOrders";
 import GraficoGananciasSimple from "./components/GraficoGananciasSimple";
@@ -82,6 +83,11 @@ export default function DashboardRender() {
         {/* Métricas principales */}
         <View className="mb-4">
           <EcommerceMetrics />
+        </View>
+
+        {/* Métricas de Ingresos y Egresos */}
+        <View className="mb-4">
+          <IngresoEgresoMetrics />
         </View>
 
         {/* Gráficos de análisis */}
