@@ -32,8 +32,8 @@ const AbrirCaja = ({ idusuarios, onSuccess, onClose }: AbrirCajaProps) => {
     }
 
     const parsedMonto = parseFloat(monto);
-    if (isNaN(parsedMonto) || parsedMonto <= 0) {
-      setModalMessage('⚠️ El monto debe ser mayor que cero.');
+    if (isNaN(parsedMonto) || parsedMonto < 0) {
+      setModalMessage('⚠️ El monto debe ser cero o un numero positivo.');
       setAdvertOpen(true);
       return;
     }
