@@ -70,7 +70,7 @@ const menuItems: MenuItem[] = [
     subItems: [
       { title: 'Ingresos', path: '/movimiento/ingreso', icon: 'trending-up' },
       { title: 'Egresos', path: '/movimiento/egreso', icon: 'trending-down' },
-      { title: 'Cierre Caja', path: '/movimiento/cierrecaja', icon: 'wallet' },
+      { title: 'Apertura y Cierre de Caja', path: '/movimiento/cierrecaja', icon: 'wallet' },
       { title: 'Chat Registro Ingreso', path: '/movimiento/ingreso/chatregistro', icon: 'wallet' },
       { title: 'Chat Registro Egreso', path: '/movimiento/egreso/chatregistro', icon: 'wallet' },
     ],
